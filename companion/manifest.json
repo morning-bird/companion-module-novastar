@@ -1,16 +1,15 @@
 {
-	"id": "apc-ups",
-	"name": "apc-ups",
-	"shortname": "APC UPS Monitor",
-	"description": "Monitors battery life and other things",
+	"id": "novastar",
+	"shortname": "Novastar",
+	"description": "Novastar",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/bitfocus/companion-module-apc-ups.git",
-	"bugs": "https://github.com/bitfocus/companion-module-apc-ups/issues",
+	"repository": "git+https://github.com/morning-bird/companion-module-novastar.git",
+	"bugs": "https://github.com/morning-bird/companion-module-novastar/issues",
 	"maintainers": [
 		{
-			"name": "Jeffrey Davidsz",
-			"email": "jeffrey.davidsz@vicreo.eu"
+			"name": "Dev Apps",
+			"email": "dev-apps@gms.church"
 		}
 	],
 	"runtime": {
@@ -20,7 +19,7 @@
 		"entrypoint": "../dist/main.js"
 	},
 	"legacyIds": [],
-	"manufacturer": "APC",
-	"products": ["UPS"],
+	"manufacturer": "Novastar",
+	"products": ["Novastar"],
 	"keywords": []
 }

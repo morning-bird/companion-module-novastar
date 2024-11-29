@@ -1,5 +1,5 @@
 {
-	"name": "apc-ups",
+	"name": "novastar",
 	"version": "1.0.0",
 	"main": "dist/main.js",
 	"scripts": {
@@ -13,10 +13,12 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/morning-bird/companion-module-apc-ups.git"
+		"url": "git+https://github.com/morning-bird/companion-module-novastar.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "^1.11.1"
+		"@companion-module/base": "^1.11.1",
+		"axios": "^1.7.8",
+		"node-cache": "^5.1.2"
 	},
 	"devDependencies": {
 		"@companion-module/tools": "^2.1.0",
