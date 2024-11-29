@@ -8,14 +8,14 @@ const axios_1 = __importDefault(require("axios"));
 function getActionDefinitions(self) {
     return {
         turnOn: {
-            name: 'Turn On',
+            name: 'Load Preset',
             options: [
                 {
                     id: 'presetId',
                     type: 'number',
                     label: 'Preset ID',
-                    default: 1,
-                    min: 1,
+                    default: 0,
+                    min: 0,
                     max: 1000,
                     required: true
                 },
@@ -26,11 +26,12 @@ function getActionDefinitions(self) {
                     baseURL: `http://${self.config.host}`,
                 });
                 const token = await self.getToken();
-                await instance.post(`/api/preset/play`, { "screenId": 0, "layoutTemplateId": 1, "presetId": +presetId, "deviceId": 0 }, {
+                const res = await instance.post(`/api/preset/play`, { "screenId": 0, "layoutTemplateId": 1, "presetId": +presetId, "deviceId": 0 }, {
                     headers: {
                         "token": token
                     }
                 });
+                self.log('debug', res.data);
             },
         }
     };

@@ -1,42 +1,36 @@
-import { InstanceBase, InstanceStatus, SomeCompanionConfigField } from '@companion-module/base'
+import { InstanceBase, InstanceStatus, runEntrypoint, SomeCompanionConfigField } from '@companion-module/base'
 import { DeviceConfig, GetConfigFields } from './config'
-import { getActionDefinitions } from './actions'
 import NodeCache from "node-cache"
 import Axios from "axios"
+import { getActionDefinitions } from './actions'
 
 export default class ModuleInstance extends InstanceBase<DeviceConfig> {
-	private cache: NodeCache = new NodeCache()
+	private cache?: NodeCache
 	public config: DeviceConfig = {
 		host: '',
 		username: '',
 		password: '',
 	}
 
-	constructor(internal: unknown) {
-		super(internal)
-	}
-
-
 	public async init(config: DeviceConfig): Promise<void> {
-		this.updateStatus(InstanceStatus.Connecting);
-		this.config = config
+		this.log('debug', 'init')
+		await this.configUpdated(config)
 		this.cache = new NodeCache({
 			stdTTL: 180,
 			deleteOnExpire: true,
-
 		})
+		this.updateStatus(InstanceStatus.Connecting);
 		try {
-			await this.configUpdated(this.config)
 			await this.getToken()
 			this.setActionDefinitions(getActionDefinitions(this));
 			this.updateStatus(InstanceStatus.Ok);
 		} catch (exc) {
-			this.updateStatus(InstanceStatus.ConnectionFailure);
+			this.updateStatus(InstanceStatus.UnknownError);
 		}
 	}
 
 	public async getToken(): Promise<string> {
-		let token = this.cache.get<string>('token')
+		let token = this.cache!.get<string>('token')
 		if (!token) {
 			const instance = Axios.create({
 				baseURL: `http://${this.config.host}`,
@@ -47,7 +41,8 @@ export default class ModuleInstance extends InstanceBase<DeviceConfig> {
 				"password": this.config.password
 			})
 			token = res.data.data.token as string
-			this.cache.set<string>('token', token)
+			this.cache!.set<string>('token', token)
+			this.log('debug', 'token: ' + token)
 		}
 		return token;
 	}
@@ -70,3 +65,5 @@ export default class ModuleInstance extends InstanceBase<DeviceConfig> {
 		this.config = config
 	}
 }
+
+runEntrypoint(ModuleInstance, [])

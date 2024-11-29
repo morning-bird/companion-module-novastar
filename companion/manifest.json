@@ -1,8 +1,9 @@
 {
 	"id": "novastar",
+	"name": "Novastar",
 	"shortname": "Novastar",
 	"description": "Novastar",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"license": "MIT",
 	"repository": "git+https://github.com/morning-bird/companion-module-novastar.git",
 	"bugs": "https://github.com/morning-bird/companion-module-novastar/issues",
@@ -21,5 +22,5 @@
 	"legacyIds": [],
 	"manufacturer": "Novastar",
 	"products": ["Novastar"],
-	"keywords": []
+	"keywords": ["Novastar"]
 }

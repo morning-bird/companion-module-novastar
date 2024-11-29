@@ -5,34 +5,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const base_1 = require("@companion-module/base");
 const config_1 = require("./config");
-const actions_1 = require("./actions");
 const node_cache_1 = __importDefault(require("node-cache"));
 const axios_1 = __importDefault(require("axios"));
+const actions_1 = require("./actions");
 class ModuleInstance extends base_1.InstanceBase {
-    cache = new node_cache_1.default();
+    cache;
     config = {
         host: '',
         username: '',
         password: '',
     };
-    constructor(internal) {
-        super(internal);
-    }
     async init(config) {
-        this.updateStatus(base_1.InstanceStatus.Connecting);
-        this.config = config;
+        this.log('debug', 'init');
+        await this.configUpdated(config);
         this.cache = new node_cache_1.default({
             stdTTL: 180,
             deleteOnExpire: true,
         });
+        this.updateStatus(base_1.InstanceStatus.Connecting);
         try {
-            await this.configUpdated(this.config);
             await this.getToken();
             this.setActionDefinitions((0, actions_1.getActionDefinitions)(this));
             this.updateStatus(base_1.InstanceStatus.Ok);
         }
         catch (exc) {
-            this.updateStatus(base_1.InstanceStatus.ConnectionFailure);
+            this.updateStatus(base_1.InstanceStatus.UnknownError);
         }
     }
     async getToken() {
@@ -48,6 +45,7 @@ class ModuleInstance extends base_1.InstanceBase {
             });
             token = res.data.data.token;
             this.cache.set('token', token);
+            this.log('debug', 'token: ' + token);
         }
         return token;
     }
@@ -67,4 +65,5 @@ class ModuleInstance extends base_1.InstanceBase {
     }
 }
 exports.default = ModuleInstance;
+(0, base_1.runEntrypoint)(ModuleInstance, []);
 //# sourceMappingURL=main.js.map
