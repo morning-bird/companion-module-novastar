@@ -31,7 +31,7 @@ function getActionDefinitions(self) {
                         "token": token
                     }
                 });
-                self.log('debug', res.data);
+                self.log('debug', JSON.stringify(res.data));
             },
         }
     };

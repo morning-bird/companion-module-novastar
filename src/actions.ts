@@ -29,7 +29,7 @@ export function getActionDefinitions(self: ModuleInstance): CompanionActionDefin
 							"token": token
 						}
 					})
-				self.log('debug', res.data)
+				self.log('debug', JSON.stringify(res.data))
 			},
 		}
 	}
