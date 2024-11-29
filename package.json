@@ -1,0 +1,41 @@
+{
+	"name": "apc-ups",
+	"version": "1.0.0",
+	"main": "dist/main.js",
+	"scripts": {
+		"prepare": "husky install",
+		"build": "rimraf dist && yarn build:main",
+		"build:main": "tsc -p tsconfig.build.json",
+		"dev": "tsc -p tsconfig.build.json --watch",
+		"lint:raw": "eslint --ext .ts --ext .js --ignore-pattern dist --ignore-pattern pkg",
+		"lint": "yarn lint:raw ."
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/morning-bird/companion-module-apc-ups.git"
+	},
+	"dependencies": {
+		"@companion-module/base": "^1.11.1"
+	},
+	"devDependencies": {
+		"@companion-module/tools": "^2.1.0",
+		"@types/node": "^18.11.9",
+		"husky": "^8.0.1",
+		"lint-staged": "^13.0.3",
+		"rimraf": "^3.0.2",
+		"typescript": "~4.9"
+	},
+	"prettier": "@companion-module/tools/.prettierrc.json",
+	"lint-staged": {
+		"*.{css,json,md,scss}": [
+			"prettier --write"
+		],
+		"*.{ts,tsx,js,jsx}": [
+			"yarn lint:raw --fix"
+		]
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	}
+}
